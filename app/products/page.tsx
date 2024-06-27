@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 const products = [
   {
     id: 1,
@@ -55,6 +55,7 @@ import {
 import { ChevronDownIcon, PlusIcon } from "@heroicons/react/20/solid";
 import Header from "../_components/Header";
 import ProductList from "../_components/ProductList";
+import ProductListSideBar from "../_components/ProductListSideBar";
 
 const filters = [
   {
@@ -99,8 +100,6 @@ function classNames(...classes: any) {
 }
 
 export default function Page() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   return (
     <div className="bg-white relative">
       <main className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
@@ -115,7 +114,8 @@ export default function Page() {
         </div>
 
         <div className="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-          <aside>
+          <ProductListSideBar />
+          {/* <aside>
             <h2 className="sr-only">Filters</h2>
 
             <button
@@ -165,8 +165,7 @@ export default function Page() {
                 ))}
               </form>
             </div>
-          </aside>
-
+          </aside> */}
           <section
             aria-labelledby="product-heading"
             className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"

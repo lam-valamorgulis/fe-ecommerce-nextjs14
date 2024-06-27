@@ -39,12 +39,17 @@ const products = [
 ];
 
 export default function Example() {
-  const [open, setOpen] = useState(true);
+  const toggleSidebar = useCartStore((state) => state.toggleSidebar);
+  const sidebarVisible = useCartStore((state) => state.sidebarVisible);
+
   const cart = useCartStore((state) => state.cart);
-  console.log(cart);
 
   return (
-    <Dialog className="relative z-10" open={open} onClose={setOpen}>
+    <Dialog
+      className="relative z-10"
+      open={sidebarVisible}
+      onClose={toggleSidebar}
+    >
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
@@ -67,7 +72,7 @@ export default function Example() {
                       <button
                         type="button"
                         className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                        onClick={() => setOpen(false)}
+                        onClick={() => toggleSidebar()}
                       >
                         <span className="absolute -inset-0.5" />
                         <span className="sr-only">Close panel</span>
@@ -150,7 +155,7 @@ export default function Example() {
                       <button
                         type="button"
                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                        onClick={() => setOpen(false)}
+                        onClick={() => toggleSidebar()}
                       >
                         Continue Shopping
                         <span aria-hidden="true"> &rarr;</span>

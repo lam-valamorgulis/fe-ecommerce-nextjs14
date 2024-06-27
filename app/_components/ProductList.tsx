@@ -3,11 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 export async function getData() {
   const res = await fetch("https://dummyjson.com/products");
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
 
@@ -30,10 +26,7 @@ async function ProductList() {
             />
           </div>
           <h3 className="mt-4 text-sm text-gray-700">
-            <Link href={`/products/${product.id}`}>
-              <span className="absolute inset-0" />
-              {product.title}
-            </Link>
+            <Link href={`/products/${product.id}`}>{product.title}</Link>
           </h3>
           <p className="mt-1 text-sm text-gray-500">{product.color}</p>
           <p className="mt-1 text-sm font-medium text-gray-900">
