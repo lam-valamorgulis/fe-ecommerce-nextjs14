@@ -1,6 +1,7 @@
 import React from "react";
-
-async function getData() {
+import Image from "next/image";
+import Link from "next/link";
+export async function getData() {
   const res = await fetch("https://dummyjson.com/products");
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
@@ -17,31 +18,27 @@ async function ProductList() {
   return (
     <>
       {products.products.map((product) => (
-        <div
-          key={product.id}
-          className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white"
-        >
-          <div className="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96">
-            <img
-              src={product.images[0]}
-              className="h-full w-full object-cover object-center sm:h-full sm:w-full"
+        <div key={product.id} className="group">
+          <div className="relative h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
+            <Image
+              src={product.thumbnail}
+              alt={product.title}
+              layout="fill"
+              objectFit="cover"
+              className="absolute inset-0 h-full w-full object-contain "
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
-          <div className="flex flex-1 flex-col space-y-2 p-4">
-            <h3 className="text-sm font-medium text-gray-900">
-              <a href="">
-                <span aria-hidden="true" className="absolute inset-0" />
-                {product.title}
-              </a>
-            </h3>
-            <p className="text-sm text-gray-500">{product.description}</p>
-            <div className="flex flex-1 flex-col justify-end">
-              <p className="text-sm italic text-gray-500">{product.options}</p>
-              <p className="text-base font-medium text-gray-900">
-                {product.price}
-              </p>
-            </div>
-          </div>
+          <h3 className="mt-4 text-sm text-gray-700">
+            <Link href={`/products/${product.id}`}>
+              <span className="absolute inset-0" />
+              {product.title}
+            </Link>
+          </h3>
+          <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+          <p className="mt-1 text-sm font-medium text-gray-900">
+            {product.price}
+          </p>
         </div>
       ))}
     </>

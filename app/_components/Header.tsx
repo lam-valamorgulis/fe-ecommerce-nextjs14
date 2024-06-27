@@ -27,6 +27,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -347,10 +348,10 @@ export default function Example() {
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
                   <div className="hidden lg:flex lg:flex-1  lg:items-center">
-                    <a href="#">
+                    <Link href="/">
                       <span className="sr-only">Your Company</span>
                       <Image src={logo} alt="" className="h-8 w-auto" />
-                    </a>
+                    </Link>
                   </div>
 
                   <div className="hidden h-full lg:flex">

@@ -4,6 +4,8 @@ import Header from "./_components/Header";
 import { Fragment, useState } from "react";
 import Image from "next/image";
 import bg from "@/public/bg.png";
+import Link from "next/link";
+import { useCartStore } from "./_lib/a2c-provider";
 
 const footerNavigation = {
   products: [
@@ -241,12 +243,12 @@ export default function Home() {
                 Lorem ipsum dolor, sit amet consect
               </h3>
               <div className="mt-6">
-                <a
-                  href="#"
+                <Link
+                  href="/products"
                   className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 font-medium text-white hover:bg-indigo-700"
                 >
                   Shop Focus
-                </a>
+                </Link>
               </div>
             </div>
           </div>
