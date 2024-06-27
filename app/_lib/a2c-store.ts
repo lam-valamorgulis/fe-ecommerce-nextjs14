@@ -1,24 +1,32 @@
 import { StateCreator } from "zustand";
 import { createStore } from "zustand/vanilla";
 
-export interface CartItem {
-  id: number;
-  title: string;
-  price: number;
-  color: string;
-  image: string;
-  quantity: number;
-}
+// export interface CartItem {
+//   id: number;
+//   title: string;
+//   price: number;
+//   color: string;
+//   image: string;
+//   quantity: number;
+// }
 
 export interface CartState {
-  cart: CartItem[];
-  addToCart: (item: CartItem) => void;
+  cart: any[];
+  sidebarVisible: boolean;
+
+  // addToCart: (item: CartItem) => void;
+  addToCart: (item: any) => void;
+
   removeFromCart: (id: number, color: string) => void;
   clearCart: () => void;
+  toggleSidebar: () => void;
 }
 
 export const createCartStore: StateCreator<CartState> = (set) => ({
   cart: [],
+  sidebarVisible: false,
+  toggleSidebar: () =>
+    set((state) => ({ sidebarVisible: !state.sidebarVisible })),
   addToCart: (item) =>
     set((state) => {
       const existingItem = state.cart.find(

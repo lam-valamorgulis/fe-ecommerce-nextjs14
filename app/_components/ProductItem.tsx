@@ -32,6 +32,8 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/20/solid";
+import { useCartStore } from "../_lib/a2c-provider";
+import Cart from "./Cart";
 
 const product = {
   name: "Zip Tote Basket",
@@ -95,6 +97,19 @@ const relatedProducts = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+const colors = [
+  {
+    name: "Washed Black",
+    bgColor: "bg-gray-700",
+    selectedColor: "ring-gray-700",
+  },
+  { name: "White", bgColor: "bg-white", selectedColor: "ring-gray-400" },
+  {
+    name: "Washed Gray",
+    bgColor: "bg-gray-500",
+    selectedColor: "ring-gray-500",
+  },
+];
 
 export default function ProductItem({ data }) {
   const {
@@ -120,10 +135,14 @@ export default function ProductItem({ data }) {
     url: imageUrl,
   }));
 
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const toggleSidebar = useCartStore((state) => state.toggleSidebar);
+  const sidebarVisible = useCartStore((state) => state.sidebarVisible);
 
   return (
     <main className="mx-auto max-w-7xl sm:px-6 sm:pt-16 lg:px-8">
+      {sidebarVisible && <Cart />}
       <div className="mx-auto max-w-2xl lg:max-w-none">
         {/* Product */}
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
@@ -216,9 +235,9 @@ export default function ProductItem({ data }) {
               />
             </div>
 
-            <form className="mt-6">
+            <div className="mt-6">
               {/* Colors */}
-              {/* <div>
+              <div>
                 <h3 className="text-sm text-gray-600">Color</h3>
 
                 <fieldset aria-label="Choose a color" className="mt-2">
@@ -227,7 +246,7 @@ export default function ProductItem({ data }) {
                     onChange={setSelectedColor}
                     className="flex items-center space-x-3"
                   >
-                    {product.colors.map((color) => (
+                    {colors.map((color) => (
                       <Radio
                         key={color.name}
                         value={color}
@@ -252,17 +271,39 @@ export default function ProductItem({ data }) {
                     ))}
                   </RadioGroup>
                 </fieldset>
-              </div> */}
+              </div>
 
               <div className="mt-10 flex">
+                <div className="mt-4 sm:mt-0 flex items-center sm:pr-9">
+                  {/* <label htmlFor={`quantity-${productIdx}`} className="sr-only">
+                    Quantity, {product.name}
+                  </label> */}
+                  <select
+                    // id={`quantity-${productIdx}`}
+                    // name={`quantity-${productIdx}`}
+                    className="max-w-full  rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                  >
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                  </select>
+                </div>
                 <button
-                  type="submit"
+                  onClick={() => {
+                    addToCart(data);
+                    toggleSidebar();
+                  }}
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                 >
                   Add to bag
                 </button>
               </div>
-            </form>
+            </div>
 
             <section aria-labelledby="details-heading" className="mt-12">
               <h2 id="details-heading" className="sr-only">
