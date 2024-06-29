@@ -7,7 +7,10 @@ import { CartStoreProvider } from "./_lib/a2c-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Ecommerce",
+  title: {
+    template: "%s | Ecommerce",
+    default: "Ecommerce",
+  },
   description: "Ecommerce",
 };
 

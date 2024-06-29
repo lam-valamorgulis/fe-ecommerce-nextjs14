@@ -3,6 +3,7 @@
 import { Fragment, useState } from "react";
 import Image from "next/image";
 import logo from "@/public/logo.svg";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import {
   Dialog,
@@ -101,6 +102,10 @@ function classNames(...classes: any) {
 
 export default function Example() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  if (pathname === "/checkout") {
+    return null;
+  }
 
   return (
     <div className="bg-white">
