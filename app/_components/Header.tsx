@@ -571,7 +571,7 @@ export default function Example() {
                   </a>
 
                   <div className="flex flex-1 items-center justify-end">
-                    <div className="flex items-center lg:ml-8">
+                    {/* <div className="flex items-center lg:ml-8">
                       <div className="flow-root">
                         <a
                           href="#"
@@ -589,7 +589,7 @@ export default function Example() {
                           </span>
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

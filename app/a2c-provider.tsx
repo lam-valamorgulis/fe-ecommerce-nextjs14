@@ -2,7 +2,11 @@
 
 import { type ReactNode, createContext, useRef, useContext } from "react";
 import { useStore } from "zustand";
-import { createCartStore, type CartState, initCartStore } from "./a2c-store";
+import {
+  createCartStore,
+  type CartState,
+  initCartStore,
+} from "./_lib/a2c-store";
 
 export type CartStoreApi = ReturnType<typeof initCartStore>;
 

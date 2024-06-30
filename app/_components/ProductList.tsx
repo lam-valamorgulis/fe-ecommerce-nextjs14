@@ -3,8 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { getProductList } from "../_lib/api";
 
-async function ProductList() {
+async function ProductList({ filter }) {
   const products = await getProductList();
+  if (!products.products.length) return null;
+  const filteredProducts = products.products.filter(
+    (product) => product.price <= filter
+  );
   return (
     <section
       aria-labelledby="product-heading"
@@ -15,13 +19,13 @@ async function ProductList() {
       </h2>
 
       <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3">
-        {products.products.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id} className="group">
             <div className="relative h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
               <Image
                 src={product.thumbnail}
                 alt={product.title}
-                layout="fill"
+                fill
                 className="absolute inset-0 h-full w-full object-contain "
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />

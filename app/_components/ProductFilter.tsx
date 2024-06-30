@@ -1,33 +1,8 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Transition,
-  TransitionChild,
-} from "@headlessui/react";
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { ChevronDownIcon, PlusIcon } from "@heroicons/react/20/solid";
-import Header from "../_components/Header";
-import ProductList from "../_components/ProductList";
+import { useEffect, useState } from "react";
+import { PlusIcon } from "@heroicons/react/20/solid";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const filters = [
   {
@@ -66,9 +41,38 @@ const filters = [
     ],
   },
 ];
-function ProductListSideBar() {
+
+function ProductFilter() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const step = 2;
+  const maxPrice = 100;
+  const [selectedPrice, setSelectedPrice] = useState(maxPrice);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  const handlePriceChange = (e) => {
+    const price = e.target.value;
+    setSelectedPrice(price);
+    updateUrlWithPrice(price);
+  };
+
+  const updateUrlWithPrice = (price) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("price", String(selectedPrice));
+    router.replace(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const price = urlParams.get("price") || maxPrice;
+    setSelectedPrice(price);
+  }, []);
+
   return (
     <aside>
       <h2 className="sr-only">Filters</h2>
@@ -115,10 +119,34 @@ function ProductListSideBar() {
               </fieldset>
             </div>
           ))}
+          <div className="pt-10">
+            <fieldset>
+              <legend className="block text-sm font-medium text-gray-900">
+                Price
+              </legend>
+              <div className="space-y-3 pt-6">
+                <div className="flex items-center">
+                  <input
+                    type="range"
+                    name="price"
+                    min={0}
+                    max={maxPrice}
+                    step={step}
+                    value={selectedPrice}
+                    onChange={handlePriceChange}
+                    className="w-full"
+                  />
+                  <span className="ml-3 text-sm text-gray-600">
+                    ${selectedPrice}
+                  </span>
+                </div>
+              </div>
+            </fieldset>
+          </div>
         </form>
       </div>
     </aside>
   );
 }
 
-export default ProductListSideBar;
+export default ProductFilter;

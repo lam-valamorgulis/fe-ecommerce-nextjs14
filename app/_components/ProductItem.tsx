@@ -32,7 +32,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { useCartStore } from "../_lib/a2c-provider";
+import { useCartStore } from "../a2c-provider";
 import Cart from "./Cart";
 
 const product = {
@@ -274,13 +274,13 @@ export default function ProductItem({ data }) {
               </div>
 
               <div className="mt-10 flex">
-                <div className="mt-4 sm:mt-0 flex items-center sm:pr-9">
-                  {/* <label htmlFor={`quantity-${productIdx}`} className="sr-only">
+                {/* <div className="mt-4 sm:mt-0 flex items-center sm:pr-9">
+                  <label htmlFor={`quantity-${productIdx}`} className="sr-only">
                     Quantity, {product.name}
-                  </label> */}
+                  </label>
                   <select
-                    // id={`quantity-${productIdx}`}
-                    // name={`quantity-${productIdx}`}
+                    id={`quantity-${productIdx}`}
+                    name={`quantity-${productIdx}`}
                     className="max-w-full  rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                   >
                     <option value={1}>1</option>
@@ -292,7 +292,7 @@ export default function ProductItem({ data }) {
                     <option value={7}>7</option>
                     <option value={8}>8</option>
                   </select>
-                </div>
+                </div> */}
                 <button
                   onClick={() => {
                     addToCart(data);

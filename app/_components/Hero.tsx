@@ -22,7 +22,7 @@ export default function Hero() {
             <div className="mt-6">
               <Link
                 href="/products"
-                className="inline-block rounded-md border border-transparent bg-indigo-800 px-8 py-3 font-medium text-white hover:bg-indigo-700"
+                className="btn-radiant text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-300"
               >
                 Shop Focus
               </Link>

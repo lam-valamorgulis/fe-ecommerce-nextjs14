@@ -9,7 +9,10 @@ import {
 } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import { createOrder } from "../_lib/actions";
-import { Metadata } from "next";
+import { useFormStatus } from "react-dom";
+import Image from "next/image";
+import ConfirmButton from "../_components/ConfirmButton";
+import { useCartStore } from "../a2c-provider";
 
 const products = [
   {
@@ -30,7 +33,7 @@ const products = [
 // export const metadata: Metadata = {
 //   title: "Check Out",
 // };
-export default function Page() {
+export default function CheckoutPage() {
   const cartData = {
     id: 1,
     name: "Micro Backpack",
@@ -39,7 +42,11 @@ export default function Page() {
     color: "Moss",
     size: "5L",
   };
+  const cart = useCartStore((state) => state.cart);
+  console.log(cart);
+
   const createOrderWithFormData = createOrder.bind(null, cartData);
+
   return (
     <div>
       <div className="bg-white">
@@ -72,20 +79,22 @@ export default function Page() {
                 role="list"
                 className="divide-y divide-gray-200 text-sm font-medium text-gray-900"
               >
-                {products.map((product) => (
+                {cart.map((product) => (
                   <li
                     key={product.id}
-                    className="flex items-start space-x-4 py-6"
+                    className="relative flex items-start space-x-4 py-6"
                   >
-                    <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}
-                      className="h-20 w-20 flex-none rounded-md object-cover object-center"
+                    <Image
+                      width={80}
+                      height={80}
+                      src={product.images[0]}
+                      alt={product.imageSrc}
+                      className="flex-none rounded-md object-cover object-center"
                     />
                     <div className="flex-auto space-y-1">
-                      <h3>{product.name}</h3>
+                      <h3>{product.title}</h3>
                       <p className="text-gray-500">{product.color}</p>
-                      <p className="text-gray-500">{product.size}</p>
+                      <p className="text-gray-500">{product.quantity}</p>
                     </div>
                     <p className="flex-none text-base font-medium">
                       {product.price}
@@ -179,7 +188,7 @@ export default function Page() {
           <form
             action={async (formData) => {
               await createOrderWithFormData(formData);
-              clearCart();
+              // clearCart();
             }}
             className="px-4 pb-36 pt-16 sm:px-6 lg:col-start-1 lg:row-start-1 lg:px-0 lg:pb-16"
           >
@@ -346,12 +355,7 @@ export default function Page() {
               </section>
 
               <div className="mt-10 border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between">
-                <button
-                  // type="submit"
-                  className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:order-last sm:ml-6 sm:w-auto"
-                >
-                  Continue
-                </button>
+                <ConfirmButton />
                 <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left"></p>
               </div>
             </div>
